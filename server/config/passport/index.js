@@ -12,14 +12,22 @@ passport.use(
     (req, username, password, cb) => {
       return User.findOne({ username })
         .then(user => {
-          console.log(typeof user);
           if (!user) {
             return cb(null, false, {
               message: "Incorrect username or password."
             });
           }
-          return cb(null, user, {
-            message: "Logged In Successfully"
+
+          user.comparePassword(password, (err, isMatch) => {
+            if (isMatch) {
+              return cb(null, user, {
+                message: "Logged In Successfully"
+              });
+            } else {
+              return cb(null, false, {
+                message: "Incorrect username or password."
+              });
+            }
           });
         })
         .catch(err => cb(err));

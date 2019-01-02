@@ -7,7 +7,6 @@ const router = express.Router();
 router.post("/", (req, res) => {
   passport.authenticate("local", { session: false }, (err, user, info) => {
     if (err || !user) {
-      console.log("Test Error", err);
       return res.status(400).json({
         message: "Something is not right",
         user: user,
@@ -17,8 +16,7 @@ router.post("/", (req, res) => {
 
     req.login(user, { session: false }, err => {
       if (err) {
-        console.log("Im here");
-        res.send(err);
+        return res.send(err);
       }
       // generate a signed son web token with the contents of user object and return it in the response
       const token = jwt.sign(user.toJSON(), "mcdo1234");

@@ -15,7 +15,7 @@ app.use(passport.initialize());
 
 app.use("/auth", authRoutes);
 
-app.get("/", (req, res) => {
+app.get("/", passport.authenticate("jwt", { session: false }), (req, res) => {
   Password.find()
     .then(data => res.send(JSON.stringify(data)))
     .catch(err => console.log(err));
