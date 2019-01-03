@@ -6,20 +6,12 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: {
     type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: v => {
-        this.model("User").find({ username: v }, (err, docs) => {
-          console.log(docs.length == 0);
-        });
-      },
-      message: "User already exists!"
-    }
+    required: [true, "Username required"],
+    unique: true
   },
-  password: { type: String, required: true },
+  password: { type: String, required: [true, "Password required"] },
   createDate: { type: Date, default: Date.now },
-  email: { type: String, unique: true }
+  email: { type: String, unique: true, required: [true, "Email required"] }
 });
 
 userSchema.pre("save", function(next) {

@@ -14,6 +14,7 @@
     "express": "^4.16.4",
     "http-errors": "^1.7.1",
     "jsonwebtoken": "^8.4.0",
+    "module-alias": "^2.1.0",
     "mongoose": "^5.4.1",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
@@ -38,5 +39,10 @@
     "build-server": "babel -d ./build ./server -s",
     "build": "npm run clean && npm run build-server",
     "production": "node ./build/bin/www"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@config": "server/config",
+    "@mongoDB": "./server/config/mongo/index.js"
   }
 }
