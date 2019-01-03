@@ -12,16 +12,16 @@ mongoose.connect(
 
 export const User = mongoose.model("User", userSchema);
 export const Password = mongoose.model("Password", passwordSchema);
-// User.create(
-//   {
-//     username: "admin",
-//     password: "secret",
-//     email: "kenneth.enriquez@gmail.com"
-//   },
-//   err => {
-//     if (err) return console.log("User", "Already Exists");
-//   }
-// );
+User.create(
+  {
+    username: "admin",
+    password: "secret",
+    email: "kenneth.enriquez@gmail.com"
+  },
+  err => {
+    if (err) return console.log("User", "Already Exists");
+  }
+);
 
 // Password.create(
 //   {

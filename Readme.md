@@ -4,8 +4,8 @@ Sample .env file
 
 ```code
 PORT=8081
-ISSUER=asm-react-app
-AUDIENCE=colfinancial
+ISSUER=issuer-app
+AUDIENCE=youraudience
 ALGORITHM=RS256
 JWTEXPIRY=12h
 ```

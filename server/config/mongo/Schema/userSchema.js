@@ -10,7 +10,7 @@ const userSchema = new Schema({
     unique: true,
     validate: {
       validator: v => {
-        Users.find({ username: v }, (err, docs) => {
+        this.model("User").find({ username: v }, (err, docs) => {
           console.log(docs.length == 0);
         });
       },
@@ -46,6 +46,6 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
   });
 };
 
-const Users = mongoose.model("Users", userSchema);
+// const Users = mongoose.model("Users", userSchema);
 
 export default userSchema;
