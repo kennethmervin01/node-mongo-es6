@@ -31,7 +31,7 @@ router.post("/", (req, res) => {
       var signOptions = {
         issuer: process.env.ISSUER,
         audience: process.env.AUDIENCE,
-        expiresIn: "12h",
+        expiresIn: process.env.JWTEXPIRY,
         algorithm: process.env.ALGORITHM
       };
       const token = jwt.sign(user.toJSON(), privateKEY, signOptions);
