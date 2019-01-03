@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import express from "express";
 //import path from "path";
 import logger from "morgan";
@@ -5,16 +6,17 @@ import createError from "http-errors";
 import "./config/passport";
 import { Password } from "./config/mongo";
 import authRoutes from "./routes/auth";
-import passport from "./middlewares/isAuthorize";
+import passportStrategy from "./middlewares/isAuthorize";
+dotenv.config(); // load .env file
 
 const app = express();
+const passport = passportStrategy(process); // initialize strategy
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
-
 app.use("/auth", authRoutes);
-
 app.get("/", passport.authenticate("jwt", { session: false }), (req, res) => {
   Password.find()
     .then(data => res.send(JSON.stringify(data)))

@@ -1,12 +1,8 @@
-import dotenv from "dotenv";
 import app from "../app";
 //import debug from "debug";
 import http from "http";
-
-dotenv.config(); // load .env file
 const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
-
 const server = http.createServer(app);
 server.listen(port);
 server.on("error", onError);

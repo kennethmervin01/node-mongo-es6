@@ -1,18 +1,27 @@
 import passport from "passport";
 import passportJWT from "passport-jwt";
+import path from "path";
+import fs from "fs";
+
 const ExtractJWT = passportJWT.ExtractJwt;
 const JWTStrategy = passportJWT.Strategy;
-
-passport.use(
-  new JWTStrategy(
-    {
-      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: "mcdo1234"
-    },
-    (payload, done) => {
-      return done(null, payload);
-    }
-  )
+const publicKey = fs.readFileSync(
+  path.resolve(__dirname, "../config/keys/public.pem")
 );
 
-export default passport;
+const passportSetUp = process => {
+  const myStrategy = {
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    secretOrKey: publicKey,
+    issuer: process.env.ISSUER,
+    audience: process.env.AUDIENCE,
+    algorithms: [process.env.ALGORITHM]
+  };
+  return passport.use(
+    new JWTStrategy(myStrategy, (payload, done) => {
+      return done(null, payload);
+    })
+  );
+};
+
+export default passportSetUp;
